@@ -10,7 +10,6 @@ public class PlayerMovement : MonoBehaviour, Controls.IMovementActions
     [SerializeField] private float maxSpeed = 3.5f;
     [SerializeField] private float acceleration = 200;
     [SerializeField] private float MaxAccelForce = 150;
-    [SerializeField] private float drag = 0.09f;
 
     [SerializeField] private bool isMoving = false;
 
