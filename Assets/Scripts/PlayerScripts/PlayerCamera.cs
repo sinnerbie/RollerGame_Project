@@ -23,7 +23,7 @@ public class PlayerCamera : MonoBehaviour
         Debug.Log("Recentering cameras");
         inputAxisController.enabled = false;
         freeLookCam.VerticalAxis.TriggerRecentering();
-        Invoke("ReturnCameraToNormal", 10.5f);
+        Invoke("ReturnCameraToNormal", 2);
     }
 
     private void ReturnCameraToNormal()
