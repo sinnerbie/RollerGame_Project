@@ -596,8 +596,8 @@ MonoBehaviour:
     Wrap: 1
     Recentering:
       Enabled: 0
-      Wait: 1
-      Time: 2
+      Wait: 0
+      Time: 0.15
     Restrictions: 0
   VerticalAxis:
     Value: 17.5
@@ -606,8 +606,8 @@ MonoBehaviour:
     Wrap: 0
     Recentering:
       Enabled: 0
-      Wait: 1
-      Time: 2
+      Wait: 0
+      Time: 0.15
     Restrictions: 0
   RadialAxis:
     Value: 1
@@ -643,7 +643,7 @@ MonoBehaviour:
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:
-    FieldOfView: 60.000004
+    FieldOfView: 60
     OrthographicSize: 5
     NearClipPlane: 0.3
     FarClipPlane: 1000
@@ -851,6 +851,7 @@ MonoBehaviour:
   MaxAccelForce: 150
   rotSpeed: 150
   storedVelocity: 0
+  driftDirection: {x: 0, y: 0, z: 0}
   driftHold: 0
   driftOnCooldown: 0
   driftCooldownDuration: 2
@@ -885,7 +886,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCamera
   freeLookCam: {fileID: 510918724}
   inputAxisController: {fileID: 510918721}
-  cam: {fileID: 1462711965}
+  cam: {fileID: 510918725}
 --- !u!114 &697719860
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1219,6 +1220,7 @@ MonoBehaviour:
   MaxAccelForce: 150
   rotSpeed: 1
   storedVelocity: 0
+  driftDirection: {x: 0, y: 0, z: 0}
   driftHold: 0
   driftOnCooldown: 0
   driftCooldownDuration: 2
@@ -1376,7 +1378,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60.000004
+  field of view: 60
   orthographic: 0
   orthographic size: 5
   m_Depth: 0

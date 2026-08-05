@@ -24,6 +24,9 @@ public class PlayerGrind : MonoBehaviour
     [SerializeField] Rigidbody _RB;
     [SerializeField] PlayerMovement movement;
 
+    public static Action OnGrindStart;
+    public static Action OnGrindEnd;
+
     void Awake()
     {
         _RB = GetComponent<Rigidbody>();
@@ -33,7 +36,6 @@ public class PlayerGrind : MonoBehaviour
     public void HandleJump(InputAction.CallbackContext context)
     {
         jump = Convert.ToBoolean(context.ReadValue<float>());
-        //ThrowOffRail();
     }
 
     public void HandleMovement(InputAction.CallbackContext context)
@@ -97,6 +99,7 @@ public class PlayerGrind : MonoBehaviour
             onRail = true;
             currentGrindRail = hit.gameObject.GetComponent<GrindRail>();
             CalculateAndSetRailPosition();
+            OnGrindStart?.Invoke();
         }
     }
 
@@ -120,6 +123,7 @@ public class PlayerGrind : MonoBehaviour
             movement.maxSpeedID++;
         onRail = false;
         currentGrindRail = null;
+        OnGrindEnd?.Invoke();
     }
 
     void EndJustGrinded()

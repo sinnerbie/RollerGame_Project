@@ -39,6 +39,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Drifting")]
     [SerializeField] private float storedVelocity;
+    [SerializeField] private Vector3 driftDirection;
     [SerializeField] private bool driftHold = false;
     [SerializeField] private bool driftOnCooldown = false;
     [SerializeField] private float driftCooldownDuration = 2;
@@ -84,6 +85,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isMoving || isDrifting)
         {
+            if (driftOnCooldown) return;
             Quaternion toRotation = Quaternion.LookRotation(inputDirection * 10, Vector3.up);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotSpeed * Time.deltaTime);
         }
@@ -120,7 +122,8 @@ public class PlayerMovement : MonoBehaviour
             currentVelocity = curVel.magnitude;
         }
 
-
+        if (driftOnCooldown)
+            _RB.linearVelocity = driftDirection;
 
         if (currentVelocity < maxSpeed * 0.15 && !isDrifting && !railGrinding.onRail && !railGrinding.justGrinded)
         {
@@ -217,6 +220,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (inputDirection != Vector3.zero && driftHold)
         {
+            driftDirection = inputDirection * (storedVelocity * driftMultiplier);
             _RB.AddForce(inputDirection * (storedVelocity * driftMultiplier), ForceMode.VelocityChange);
 
             storedVelocity = 0;
