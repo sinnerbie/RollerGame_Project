@@ -60,6 +60,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float normalThreshold;
     private float groundAngle;
     private Vector3 spherePosition;
+    private RaycastHit slopeHit;
+    [SerializeField] private float slopeLerpSpeed = 1;
+    [SerializeField] private LayerMask playerLayer;
 
     [Header("Active Inputs")]
     [SerializeField] private bool isMoving = false;
@@ -91,6 +94,8 @@ public class PlayerMovement : MonoBehaviour
         }
 
         GroundCheck();
+
+        SlopeCheck();
 
         if (isAirborne)
         {
@@ -201,6 +206,16 @@ public class PlayerMovement : MonoBehaviour
                     isAirborne = false;
                 }
             }
+        }
+    }
+
+    
+    void SlopeCheck()
+    {
+        if (Physics.Raycast(transform.position + new Vector3(0, 1.85f / 2, 0), Vector3.down, out slopeHit, 1f, ~playerLayer))
+        {
+            if (Vector3.Angle(slopeHit.normal, Vector3.up) != 0)
+                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.FromToRotation(transform.up, slopeHit.normal) * transform.rotation, slopeLerpSpeed * Time.deltaTime);
         }
     }
 
