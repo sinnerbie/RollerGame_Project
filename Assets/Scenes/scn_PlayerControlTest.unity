@@ -868,6 +868,10 @@ MonoBehaviour:
   checkOffset: {x: 0, y: 0, z: 0}
   sphereRadius: 0.25
   normalThreshold: 20
+  slopeLerpSpeed: 1
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 0
   isMoving: 0
   isDrifting: 0
   justJumped: 0
@@ -1237,6 +1241,10 @@ MonoBehaviour:
   checkOffset: {x: 0, y: 0, z: 0}
   sphereRadius: 0
   normalThreshold: 0
+  slopeLerpSpeed: 1
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 0
   isMoving: 0
   isDrifting: 0
   justJumped: 0
@@ -1701,6 +1709,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 543450653036067777}
     m_Modifications:
+    - target: {fileID: -9216449318586488911, guid: ef154ccf85049cc48a32fab0d0bad7df, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ec88a545d7e90da4f8817ed0ed6534fe, type: 2}
     - target: {fileID: -8679921383154817045, guid: ef154ccf85049cc48a32fab0d0bad7df, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

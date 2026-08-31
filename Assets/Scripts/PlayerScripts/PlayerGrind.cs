@@ -27,6 +27,16 @@ public class PlayerGrind : MonoBehaviour
     public static Action OnGrindStart;
     public static Action OnGrindEnd;
 
+    private void OnEnable()
+    {
+        PlayerRailDetection.OnHitRail += StartGrinding;
+    }
+
+    private void OnDisable()
+    {
+        PlayerRailDetection.OnHitRail -= StartGrinding;
+    }
+
     void Awake()
     {
         _RB = GetComponent<Rigidbody>();
@@ -80,7 +90,8 @@ public class PlayerGrind : MonoBehaviour
             Vector3 worldPos = currentGrindRail.LocalToWorldConversion(pos);
             Vector3 nextPos = currentGrindRail.LocalToWorldConversion(nextPosFloat);
 
-            transform.position = worldPos + (transform.up * heightOffset);
+            Vector3 setToPos = worldPos + (transform.up * heightOffset);
+            transform.position = setToPos;
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(nextPos - worldPos), lerpSpeed * Time.deltaTime);
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.FromToRotation(transform.up, up) * transform.rotation, lerpSpeed * Time.deltaTime);
 
@@ -91,16 +102,14 @@ public class PlayerGrind : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision hit)
+    void StartGrinding(Collider hit)
     {
-        if (hit.gameObject.tag == "Rail")
-        {
-            grindSpeed = movement.currentVelocity;
-            onRail = true;
-            currentGrindRail = hit.gameObject.GetComponent<GrindRail>();
-            CalculateAndSetRailPosition();
-            OnGrindStart?.Invoke();
-        }
+        grindSpeed = movement.currentVelocity;
+        onRail = true;
+        _RB.useGravity = false;
+        currentGrindRail = hit.gameObject.GetComponent<GrindRail>();
+        CalculateAndSetRailPosition();
+        OnGrindStart?.Invoke();
     }
 
     void CalculateAndSetRailPosition()
@@ -118,16 +127,9 @@ public class PlayerGrind : MonoBehaviour
     public void ThrowOffRail()
     {
         justGrinded = true;
-        Invoke("EndJustGrinded", 1);
-        if (grindSpeed > movement.maxSpeed * 0.75f)
-            movement.maxSpeedID++;
         onRail = false;
         currentGrindRail = null;
+        _RB.useGravity = true;
         OnGrindEnd?.Invoke();
-    }
-
-    void EndJustGrinded()
-    {
-        justGrinded = false;
     }
 }
