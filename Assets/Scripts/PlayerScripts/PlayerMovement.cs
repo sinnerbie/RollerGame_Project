@@ -28,6 +28,8 @@ public class PlayerMovement : MonoBehaviour
             if (speedID >= varyingMaxSpeeds.Length)
                 speedID = varyingMaxSpeeds.Length - 1;
 
+            OnChangeMaxVel?.Invoke(maxSpeed, varyingMaxSpeeds[speedID]);
+            Debug.Log("Altering max speed");
             maxSpeed = varyingMaxSpeeds[speedID];
         }
     }
@@ -69,6 +71,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private bool isDrifting = false;
     [SerializeField] private bool justJumped = false;
     [SerializeField] private bool holdJump = false;
+
+    public static Action<float, float> OnChangeVelocity;
+    public static Action<float, float> OnChangeMaxVel;
+    public static Action<float> OnStoreVelocity;
+    public static Action OnReleaseStoredVelocity;
 
     void Awake()
     {
@@ -134,6 +141,7 @@ public class PlayerMovement : MonoBehaviour
         {
             speedID--;
             if (speedID < 0) speedID = 0;
+            OnChangeMaxVel?.Invoke(maxSpeed, varyingMaxSpeeds[speedID]);
             maxSpeed = varyingMaxSpeeds[speedID];
         }
 
@@ -151,6 +159,9 @@ public class PlayerMovement : MonoBehaviour
             justJumped = false;
             isAirborne = true;
         }
+
+        Vector3 checkVel = new Vector3(_RB.linearVelocity.x, 0, _RB.linearVelocity.z);
+        OnChangeVelocity?.Invoke(checkVel.magnitude, maxSpeed);
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -232,6 +243,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!driftOnCooldown && currentVelocity > 0 && !railGrinding.onRail)
         {
+            OnStoreVelocity?.Invoke(currentVelocity);
             driftHold = true;
             storedVelocity = currentVelocity;
             isDrifting = true;
@@ -254,6 +266,7 @@ public class PlayerMovement : MonoBehaviour
             Invoke("EndDriftCooldown", driftCooldownDuration);
         }
         driftHold = false;
+        OnReleaseStoredVelocity?.Invoke();
         storedVelocity = 0;
     }
 
