@@ -24,7 +24,6 @@ public class PlayerCamera : MonoBehaviour
 
     private void SpeedBoostCamera()
     {
-        inputAxisController.enabled = false;
         var recentering = freeLookCam.HorizontalAxis.Recentering;
         recentering.Enabled = true;
         recentering.Wait = 0;
@@ -35,12 +34,11 @@ public class PlayerCamera : MonoBehaviour
         recentering.Wait = 0;
         recentering.Time = 0.15f;
         freeLookCam.HorizontalAxis.Recentering = recentering;
-        Invoke("EndSpeedCam", 2);
+        Invoke("EndSpeedCam", 0.75f);
     }
 
     private void EndSpeedCam()
     {
-        inputAxisController.enabled = true;
         var recentering = freeLookCam.HorizontalAxis.Recentering;
         recentering.Enabled = false;
         recentering.Wait = 0;

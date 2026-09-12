@@ -45,7 +45,6 @@ public class SpeedometerDisplay : MonoBehaviour
     private void UpdateMaxVelocity(float oldMax, float newMax)
     {
         float disparity = newMax / oldMax;
-        Debug.Log("updating max " + disparity);
         maxVelDisplay.DOSizeDelta(new Vector2(originalSizeDelta.x, originalSizeDelta.y * disparity), 0.15f);
     }
 

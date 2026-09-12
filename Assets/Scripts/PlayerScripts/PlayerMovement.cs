@@ -29,7 +29,6 @@ public class PlayerMovement : MonoBehaviour
                 speedID = varyingMaxSpeeds.Length - 1;
 
             OnChangeMaxVel?.Invoke(maxSpeed, varyingMaxSpeeds[speedID]);
-            Debug.Log("Altering max speed");
             maxSpeed = varyingMaxSpeeds[speedID];
         }
     }
@@ -44,7 +43,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Vector3 driftDirection;
     [SerializeField] private bool driftHold = false;
     [SerializeField] private bool driftOnCooldown = false;
-    [SerializeField] private float driftCooldownDuration = 2;
+    [SerializeField] private float driftCooldownDuration = 0.75f;
     [SerializeField] private float driftMultiplier = 1.5f;
 
     [Header("Jumping")]
@@ -135,14 +134,11 @@ public class PlayerMovement : MonoBehaviour
         }
 
         if (driftOnCooldown)
-            _RB.linearVelocity = driftDirection;
+            _RB.linearVelocity = new Vector3(driftDirection.x, _RB.linearVelocity.y, driftDirection.z);
 
-        if (currentVelocity < maxSpeed * 0.15 && !isDrifting && !railGrinding.onRail && !railGrinding.justGrinded)
+        if (currentVelocity < maxSpeed * 0.15 && !isDrifting && !railGrinding.onRail && !railGrinding.justGrinded && !driftOnCooldown)
         {
-            speedID--;
-            if (speedID < 0) speedID = 0;
-            OnChangeMaxVel?.Invoke(maxSpeed, varyingMaxSpeeds[speedID]);
-            maxSpeed = varyingMaxSpeeds[speedID];
+            maxSpeedID--;
         }
 
         if (justJumped)
@@ -243,8 +239,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!driftOnCooldown && currentVelocity > 0 && !railGrinding.onRail)
         {
-            OnStoreVelocity?.Invoke(currentVelocity);
             driftHold = true;
+            OnStoreVelocity?.Invoke(currentVelocity);
             storedVelocity = currentVelocity;
             isDrifting = true;
             _RB.linearVelocity = Vector3.zero;
