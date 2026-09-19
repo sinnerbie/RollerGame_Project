@@ -12,6 +12,7 @@ public class SpeedometerDisplay : MonoBehaviour
     [SerializeField] private RectTransform maxVelDisplay;
     [SerializeField] private Vector2 originalSizeDelta;
     [SerializeField] private Image driftInputIcon;
+    [SerializeField] private Sprite[] dInputIcons = new Sprite[2];
     [SerializeField] private Image chargeGlow;
 
     private void OnEnable()

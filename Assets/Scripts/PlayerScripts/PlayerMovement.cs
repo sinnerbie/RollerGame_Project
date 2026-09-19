@@ -90,7 +90,7 @@ public class PlayerMovement : MonoBehaviour
         maxSpeed = varyingMaxSpeeds[speedID];
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (isMoving || isDrifting)
         {
@@ -116,10 +116,21 @@ public class PlayerMovement : MonoBehaviour
                 goingUp = false;
             }
         }
-    }
 
-    void FixedUpdate()
-    {
+        if (isAirborne)
+        {
+            if (_RB.linearVelocity.y < 0)
+            {
+                _RB.linearVelocity += Vector3.up * Physics.gravity.y * fallMultiplier * Time.deltaTime;
+                goingUp = false;
+            }
+            else if (_RB.linearVelocity.y > 0 && !holdJump)
+            {
+                _RB.linearVelocity += Vector3.up * Physics.gravity.y * lowJumpMultiplier * Time.deltaTime;
+                goingUp = false;
+            }
+        }
+
         if (isMoving && !isDrifting && !railGrinding.onRail)
         {
             speed = Vector3.MoveTowards(speed, inputDirection * maxSpeed, acceleration * Time.deltaTime);

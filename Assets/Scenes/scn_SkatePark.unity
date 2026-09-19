@@ -719,6 +719,7 @@ GameObject:
   - component: {fileID: 316401644}
   - component: {fileID: 316401646}
   - component: {fileID: 316401645}
+  - component: {fileID: 316401647}
   m_Layer: 5
   m_Name: Image_ChargeGlow
   m_TagString: Untagged
@@ -743,7 +744,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 77.6301, y: 49.6677}
+  m_SizeDelta: {x: 144, y: 144}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &316401645
 MonoBehaviour:
@@ -765,7 +766,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: c03e9186aabe81e4aa0f9b89dc2a7a92, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -783,6 +784,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 316401643}
   m_CullTransparentMesh: 1
+--- !u!114 &316401647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 316401643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Mask
+  m_ShowMaskGraphic: 1
 --- !u!1 &332067863 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -7352819210102558679, guid: b7c2a6f34db657143a2e31e46006820a, type: 3}
@@ -1256,7 +1270,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.7287736, g: 0.9716981, b: 0.9507854, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1438,7 +1452,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 1
 --- !u!114 &697719854
@@ -3104,6 +3118,9 @@ MonoBehaviour:
   maxVelDisplay: {fileID: 1776203839}
   originalSizeDelta: {x: 0, y: 0}
   driftInputIcon: {fileID: 1981988792}
+  dInputIcons:
+  - {fileID: -1509520255, guid: f40232d24f875e54eb87a6d611cb9db7, type: 3}
+  - {fileID: 1538140744, guid: f40232d24f875e54eb87a6d611cb9db7, type: 3}
   chargeGlow: {fileID: 316401645}
 --- !u!114 &1300833798
 MonoBehaviour:
@@ -4315,9 +4332,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 1538140744, guid: f40232d24f875e54eb87a6d611cb9db7, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
