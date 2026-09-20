@@ -1594,8 +1594,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 119
   checkOffset: {x: 0, y: 0, z: 0}
-  sphereRadius: 0.25
-  normalThreshold: 20
+  sphereRadius: 0.2
   slopeLerpSpeed: 15
   playerLayer:
     serializedVersion: 2
@@ -2381,7 +2380,6 @@ MonoBehaviour:
     m_Bits: 0
   checkOffset: {x: 0, y: 0, z: 0}
   sphereRadius: 0
-  normalThreshold: 0
   slopeLerpSpeed: 1
   playerLayer:
     serializedVersion: 2

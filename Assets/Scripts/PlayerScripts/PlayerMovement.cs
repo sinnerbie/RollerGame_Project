@@ -58,8 +58,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask groundLayers;
     [SerializeField] private Vector3 checkOffset;
     [SerializeField] private float sphereRadius;
-    [SerializeField] private float normalThreshold;
-    private float groundAngle;
     private Vector3 spherePosition;
     private RaycastHit slopeHit;
     [SerializeField] private float slopeLerpSpeed = 15;
@@ -205,37 +203,32 @@ public class PlayerMovement : MonoBehaviour
         spherePosition = transform.position + checkOffset;
 
         colliders = Physics.OverlapSphere(spherePosition, sphereRadius, groundLayers);
+        
         if (colliders.Length == 0)
             isAirborne = true;
         if (colliders.Length > 0)
         {
             foreach (Collider col  in colliders)
             {
-                Vector3 colliderPos = col.gameObject.transform.position;
-                groundAngle = Vector3.Angle(spherePosition, colliderPos);
-
-                if (groundAngle > 180 + normalThreshold || groundAngle < 180 - normalThreshold)
+                if (jumpMomentum != Vector3.zero)
                 {
-                    if (jumpMomentum != Vector3.zero)
+                    _RB.linearVelocity = jumpMomentum;
+                    jumpMomentum = Vector3.zero;
+                }
+                isAirborne = false;
+                if (railGrinding.justGrinded)
+                {
+                    railGrinding.justGrinded = false;
+                    if (col.gameObject.tag != "Rail")
                     {
-                        _RB.linearVelocity = jumpMomentum;
-                        jumpMomentum = Vector3.zero;
-                    }
-                    isAirborne = false;
-                    if (railGrinding.justGrinded)
-                    {
-                        railGrinding.justGrinded = false;
-                        if (col.gameObject.tag != "Rail")
-                        {
-                            if (railGrinding.grindSpeed > maxSpeed * 0.75f)
-                                maxSpeedID++;
-                        }
+                        if (railGrinding.grindSpeed > maxSpeed * 0.75f)
+                            maxSpeedID++;
                     }
                 }
             }
         }
     }
-    
+
     void SlopeCheck()
     {
         if (railGrinding.onRail) return;
